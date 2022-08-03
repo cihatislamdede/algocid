@@ -17,7 +17,10 @@ class Account:
         self.algod_client = algod_client
         self.indexer_client = indexer_client
 
-    def get_balance(self, address: str, readable: bool = False):
+    def info(self, address: str):
+        return self.indexer_client.account_info(address)
+
+    def balance(self, address: str, readable: bool = False):
         balance = self.indexer_client.account_info(address)["account"]["amount"]
         if readable:
             return "{:,}".format(balance / 10**6)
@@ -29,5 +32,8 @@ class Asset:
         self.algod_client = algod_client
         self.indexer_client = indexer_client
 
-    def get_creator(self, asset_id: str):
+    def info(self, asset_id: str):
+        return self.indexer_client.asset_info(asset_id)
+
+    def creator(self, asset_id: str):
         return self.indexer_client.asset_info(asset_id)["asset"]["params"]["creator"]
