@@ -26,6 +26,16 @@ class Account:
             return "{:,}".format(balance / 10**6)
         return balance
 
+    def created_asset_ids(self, account_address):
+        account_info = self.algod_client.account_info(account_address)
+        created_asset_ids = [asset["index"] for asset in account_info["created-assets"]]
+        return created_asset_ids
+
+    def asset_ids(self, account_address):
+        account_info = self.algod_client.account_info(account_address)
+        asset_ids = [asset["asset-id"] for asset in account_info["assets"]]
+        return asset_ids
+
 
 class Asset:
     def __init__(self, algod_client: v2client.algod.AlgodClient, indexer_client: v2client.indexer.IndexerClient):
