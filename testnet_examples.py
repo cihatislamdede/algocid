@@ -1,5 +1,7 @@
 import json
-from algocid import Account, Asset, testnet_algod_client, testnet_indexer_client
+
+from algocid import (Account, Asset, testnet_algod_client,
+                     testnet_indexer_client)
 
 account = Account(indexer_client=testnet_indexer_client, algod_client=testnet_algod_client)
 asset = Asset(indexer_client=testnet_indexer_client, algod_client=testnet_algod_client)

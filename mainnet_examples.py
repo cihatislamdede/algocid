@@ -1,18 +1,18 @@
-import json
-from algocid import Account, Asset, mainnet_algod_client, mainnet_indexer_client
+# import json
+from algocid import Account, Asset, get_v2_algod_client, get_v2_indexer_client
 
-account = Account(indexer_client=mainnet_indexer_client, algod_client=mainnet_algod_client)
-asset = Asset(indexer_client=mainnet_indexer_client, algod_client=mainnet_algod_client)
+account = Account(indexer_client=get_v2_indexer_client, algod_client=get_v2_algod_client)
+asset = Asset(indexer_client=get_v2_indexer_client, algod_client=get_v2_algod_client)
 
-address = "VYPDFMVRXCI2Z4FPC2GHB4QC6PSCTEDAS4EU7GE3W4B3MRHXNZO6BB2RZA"
-asset_id = "312769"
+address = "GLOY2UAW3EVUBFMW6XGKUPZITLWPOGIJTEWPADZOIKHTGJLL4GNQUYED4M"
+asset_id = "719923979"
 
 print("##############################")
 print("address:", address)
 print("asset_id:", asset_id)
 print("##############################")
 # Account examples
-# print(json.dumps(account.info(address), indent=4))
+# print(account.info(address))
 # print("balance:", account.balance(address, readable=True))
 # print(account.balance(address))
 # print("created asset ids", account.created_asset_ids(address))
@@ -20,5 +20,13 @@ print("##############################")
 
 
 # Asset examples
-# print(json.dumps(asset.info(asset_id=asset_id), indent=4))
+# print(asset.info(asset_id=asset_id))
 # print("asset creator:", asset.creator(asset_id=asset_id))
+# print(asset.creator(asset_id))
+# print(asset.name(asset_id))
+# print(asset.unit_name(asset_id))
+# print(asset.url(asset_id))
+# print(asset.params(asset_id))
+# print(asset.metadata(326189642))
+# print(asset.holders(asset_id))
+# print(asset.holders(asset_id, only_wallets=True))
