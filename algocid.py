@@ -2,19 +2,27 @@ import base64
 
 import requests
 from algosdk import v2client
-from endpoints.indexer_endpoints import ALGONODE_INDEXER_MAINNET
+from endpoints.indexer_endpoints import ALGONODE_INDEXER_MAINNET, ALGONODE_INDEXER_TESTNET
 
-from endpoints.node_endpoints import ALGONODE_NODE_MAINNET
-
-
-def get_v2_algod_client():
-    return v2client.algod.AlgodClient(
-        algod_address=ALGONODE_NODE_MAINNET, algod_token="", headers={"User-Agent": "algocid"}
-    )
+from endpoints.node_endpoints import ALGONODE_NODE_MAINNET, ALGONODE_NODE_TESTNET
 
 
-def get_v2_indexer_client():
-    return v2client.indexer.IndexerClient(indexer_address=ALGONODE_INDEXER_MAINNET, indexer_token="", headers={"User-Agent": "algocid"})
+def get_v2_algod_client(is_tesnet=False):
+    if is_tesnet:
+        return v2client.algod.AlgodClient(
+            algod_address=ALGONODE_NODE_TESTNET, algod_token="", headers={"User-Agent": "algocid"}
+        )
+    else:
+        return v2client.algod.AlgodClient(
+            algod_address=ALGONODE_NODE_MAINNET, algod_token="", headers={"User-Agent": "algocid"}
+        )
+
+
+def get_v2_indexer_client(is_tesnet=False):
+    if is_tesnet:
+        return v2client.indexer.IndexerClient(indexer_address=ALGONODE_INDEXER_TESTNET, indexer_token="", headers={"User-Agent": "algocid"})
+    else:
+        return v2client.indexer.IndexerClient(indexer_address=ALGONODE_INDEXER_MAINNET, indexer_token="", headers={"User-Agent": "algocid"})
 
 
 class Account:
