@@ -1,8 +1,8 @@
 # import json
-from algocid import Account, Asset, get_v2_algod_client, get_v2_indexer_client
+from algocid import AccountFetcher, AssetFetcher, get_v2_algod_client, get_v2_indexer_client
 
-account = Account(indexer_client=get_v2_indexer_client, algod_client=get_v2_algod_client)
-asset = Asset(indexer_client=get_v2_indexer_client, algod_client=get_v2_algod_client)
+account = AccountFetcher(indexer_client=get_v2_indexer_client, algod_client=get_v2_algod_client)
+asset = AssetFetcher(indexer_client=get_v2_indexer_client, algod_client=get_v2_algod_client)
 
 address = "GLOY2UAW3EVUBFMW6XGKUPZITLWPOGIJTEWPADZOIKHTGJLL4GNQUYED4M"
 asset_id = "719923979"

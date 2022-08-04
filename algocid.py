@@ -2,9 +2,7 @@ import base64
 from ast import literal_eval
 import requests
 from algosdk import v2client
-from endpoints.indexer_endpoints import ALGONODE_INDEXER_MAINNET, ALGONODE_INDEXER_TESTNET
-
-from endpoints.node_endpoints import ALGONODE_NODE_MAINNET, ALGONODE_NODE_TESTNET
+from constants import ALGONODE_INDEXER_MAINNET, ALGONODE_INDEXER_TESTNET, ALGONODE_NODE_MAINNET, ALGONODE_NODE_TESTNET
 
 
 def get_v2_algod_client(is_tesnet=False):
@@ -25,7 +23,7 @@ def get_v2_indexer_client(is_tesnet=False):
         return v2client.indexer.IndexerClient(indexer_address=ALGONODE_INDEXER_MAINNET, indexer_token="", headers={"User-Agent": "algocid"})
 
 
-class Account:
+class AccountFetcher:
     def __init__(self, algod_client: v2client.algod.AlgodClient, indexer_client: v2client.indexer.IndexerClient):
         self.algod_client = algod_client
         self.indexer_client = indexer_client
@@ -61,7 +59,7 @@ class Account:
         return any(asset_id in creator_assets for asset_id in account_assets)
 
 
-class Asset:
+class AssetFetcher:
     def __init__(self, algod_client: v2client.algod.AlgodClient, indexer_client: v2client.indexer.IndexerClient):
         self.algod_client = algod_client
         self.indexer_client = indexer_client
