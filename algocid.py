@@ -80,15 +80,26 @@ class AssetFetcher:
         return self.params(asset_id)["unit-name"]
 
     def url(self, asset_id: str) -> str:
-        return self.params(asset_id)["url"]
+        try:
+            return self.metadata(asset_id)["url"]
+        except KeyError:
+            print("No url found for asset!")
+            return ""
 
     def creator(self, asset_id: str) -> str:
         return self.params(asset_id)["creator"]
 
     def metadata(self, asset_id: str) -> dict:
-        req = requests.get(f"https://mainnet-idx.algonode.cloud/v2/assets/{asset_id}/transactions?tx-type=acfg").json()["transactions"]
-        note = req[len(req) - 1]["note"]
-        return literal_eval(base64.b64decode(note).decode("utf-8"))
+        try:
+            req = requests.get(f"https://mainnet-idx.algonode.cloud/v2/assets/{asset_id}/transactions?tx-type=acfg").json()["transactions"]
+            note = req[len(req) - 1]["note"]
+            return literal_eval(base64.b64decode(note).decode("utf-8"))
+        except KeyError:
+            print("No metadata found for asset!")
+            return {}
+        except Exception as e:
+            print(e)
+            return {}
 
     def holders(self, asset_id: str, only_wallets: bool = False) -> list:
         if not only_wallets:

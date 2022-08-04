@@ -1,11 +1,16 @@
-# import json
 from algocid import AccountFetcher, AssetFetcher, get_v2_algod_client, get_v2_indexer_client
 
-account = AccountFetcher(indexer_client=get_v2_indexer_client, algod_client=get_v2_algod_client)
-asset = AssetFetcher(indexer_client=get_v2_indexer_client, algod_client=get_v2_algod_client)
+IS_TESTNET = False
 
-address = "GLOY2UAW3EVUBFMW6XGKUPZITLWPOGIJTEWPADZOIKHTGJLL4GNQUYED4M"
-asset_id = "719923979"
+account = AccountFetcher(indexer_client=get_v2_indexer_client(is_tesnet=IS_TESTNET), algod_client=get_v2_algod_client(is_tesnet=IS_TESTNET))
+asset = AssetFetcher(indexer_client=get_v2_indexer_client(is_tesnet=IS_TESTNET), algod_client=get_v2_algod_client(is_tesnet=IS_TESTNET))
+
+if IS_TESTNET:
+    address = "VETIGP3I6RCUVLVYNDW5UA2OJMXB5WP6L6HJ3RWO2R37GP4AVETICXC55I"
+    asset_id = "10458941"
+else:
+    address = "GLOY2UAW3EVUBFMW6XGKUPZITLWPOGIJTEWPADZOIKHTGJLL4GNQUYED4M"
+    asset_id = "719923979"
 
 print("##############################")
 print("address:", address)
@@ -19,7 +24,7 @@ print("##############################")
 # print("asset ids:", account.asset_ids(address))
 
 
-# # Asset examples
+# Asset examples
 # print(asset.info(asset_id=asset_id))
 # print("asset creator:", asset.creator(asset_id=asset_id))
 # print(asset.creator(asset_id))
