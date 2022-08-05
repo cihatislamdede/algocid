@@ -23,8 +23,8 @@ def get_v2_indexer_client(is_tesnet=IS_TESTNET):
         return v2client.indexer.IndexerClient(indexer_address=ALGONODE_INDEXER_MAINNET, indexer_token="", headers={"User-Agent": "algocid"})
 
 
-indexer_request_url = f"{ALGONODE_INDEXER_TESTNET}/v2/" if IS_TESTNET else f"{ALGONODE_INDEXER_MAINNET}/v2"
-node_request_url = f"{ALGONODE_NODE_TESTNET}/v2/" if IS_TESTNET else f"{ALGONODE_NODE_MAINNET}/v2"
+indexer_request_url = f"{ALGONODE_INDEXER_TESTNET}/v2" if IS_TESTNET else f"{ALGONODE_INDEXER_MAINNET}/v2"
+node_request_url = f"{ALGONODE_NODE_TESTNET}/v2" if IS_TESTNET else f"{ALGONODE_NODE_MAINNET}/v2"
 
 
 class AccountFetcher:
