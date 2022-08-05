@@ -1,6 +1,6 @@
 from algocid import AccountFetcher, AssetFetcher, get_v2_algod_client, get_v2_indexer_client
+from constants import IS_TESTNET
 
-IS_TESTNET = False
 
 account = AccountFetcher(indexer_client=get_v2_indexer_client(is_tesnet=IS_TESTNET), algod_client=get_v2_algod_client(is_tesnet=IS_TESTNET))
 asset = AssetFetcher(indexer_client=get_v2_indexer_client(is_tesnet=IS_TESTNET), algod_client=get_v2_algod_client(is_tesnet=IS_TESTNET))
@@ -24,7 +24,7 @@ print("##############################")
 # print("asset ids:", account.asset_ids(address))
 
 
-# Asset examples
+# # Asset examples
 # print(asset.info(asset_id=asset_id))
 # print("asset creator:", asset.creator(asset_id=asset_id))
 # print(asset.creator(asset_id))
@@ -33,5 +33,5 @@ print("##############################")
 # print(asset.url(asset_id))
 # print(asset.params(asset_id))
 # print(asset.metadata(326189642))
-# print(asset.holders(asset_id))
-# print(asset.holders(asset_id, only_wallets=True))
+print(asset.holders(asset_id))
+print(asset.holders(asset_id, only_wallets=True))

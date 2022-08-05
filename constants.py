@@ -19,3 +19,6 @@ ALGOEXPLORER_NODE_TESTNET = "https://node.testnet.algoexplorerapi.io/"
 ALGOEXPLORER_NODE_BETANET = "https://node.betanet.algoexplorerapi.io/"
 
 YOUR_NODE = ""
+
+
+IS_TESTNET = False

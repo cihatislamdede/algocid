@@ -2,10 +2,10 @@ import base64
 from ast import literal_eval
 import requests
 from algosdk import v2client
-from constants import ALGONODE_INDEXER_MAINNET, ALGONODE_INDEXER_TESTNET, ALGONODE_NODE_MAINNET, ALGONODE_NODE_TESTNET
+from constants import ALGONODE_INDEXER_MAINNET, ALGONODE_INDEXER_TESTNET, ALGONODE_NODE_MAINNET, ALGONODE_NODE_TESTNET, IS_TESTNET
 
 
-def get_v2_algod_client(is_tesnet=False):
+def get_v2_algod_client(is_tesnet=IS_TESTNET):
     if is_tesnet:
         return v2client.algod.AlgodClient(
             algod_address=ALGONODE_NODE_TESTNET, algod_token="", headers={"User-Agent": "algocid"}
@@ -16,11 +16,15 @@ def get_v2_algod_client(is_tesnet=False):
         )
 
 
-def get_v2_indexer_client(is_tesnet=False):
+def get_v2_indexer_client(is_tesnet=IS_TESTNET):
     if is_tesnet:
         return v2client.indexer.IndexerClient(indexer_address=ALGONODE_INDEXER_TESTNET, indexer_token="", headers={"User-Agent": "algocid"})
     else:
         return v2client.indexer.IndexerClient(indexer_address=ALGONODE_INDEXER_MAINNET, indexer_token="", headers={"User-Agent": "algocid"})
+
+
+indexer_request_url = f"{ALGONODE_INDEXER_TESTNET}/v2/" if IS_TESTNET else f"{ALGONODE_INDEXER_MAINNET}/v2"
+node_request_url = f"{ALGONODE_NODE_TESTNET}/v2/" if IS_TESTNET else f"{ALGONODE_NODE_MAINNET}/v2"
 
 
 class AccountFetcher:
@@ -91,7 +95,7 @@ class AssetFetcher:
 
     def metadata(self, asset_id: str) -> dict:
         try:
-            req = requests.get(f"https://mainnet-idx.algonode.cloud/v2/assets/{asset_id}/transactions?tx-type=acfg").json()["transactions"]
+            req = requests.get(f"{indexer_request_url}/assets/{asset_id}/transactions?tx-type=acfg").json()["transactions"]
             note = req[len(req) - 1]["note"]
             return literal_eval(base64.b64decode(note).decode("utf-8"))
         except KeyError:
@@ -103,7 +107,7 @@ class AssetFetcher:
 
     def holders(self, asset_id: str, only_wallets: bool = False) -> list:
         if not only_wallets:
-            return requests.get(f"https://mainnet-idx.algonode.cloud/v2/assets/{asset_id}/balances?currency-greater-than=0").json()["balances"]
+            return requests.get(f"{indexer_request_url}/assets/{asset_id}/balances?currency-greater-than=0").json()["balances"]
         else:
-            holders = requests.get(f"https://mainnet-idx.algonode.cloud/v2/assets/{asset_id}/balances?currency-greater-than=0").json()["balances"]
+            holders = requests.get(f"{indexer_request_url}/assets/{asset_id}/balances?currency-greater-than=0").json()["balances"]
             return [holder["address"] for holder in holders]
